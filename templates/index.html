@@ -13,10 +13,10 @@
         <link rel="shortcut icon" href="favicon.ico">
     </head>
     <body>
-        <script src="/static/form.js"></script>
         <h1> Welcome to MEOW! </h1>
         <textarea id="code" name="code" placeholder="int main() {&#10;    char buf[20];&#10;    gets(buf);&#10;}" rows="12" required></textarea>
         <div id="buttonbar">
+            <input type='file' id='file-input' style='display: none'>
             <button id="upload">
                 Upload file
             </button>
@@ -27,5 +27,6 @@
                 </svg>
             </button>
         </div>
+        <script src="/static/form.js"></script>
     </body>
 </html>
