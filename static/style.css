@@ -1,0 +1,102 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: auto;
+    max-width: 40em;
+    font-size: 18px;
+    color: #222;
+    background: #f8f8f8;
+    padding: 10px;
+    font-family: "Open Sans", sans-serif;
+}
+
+h1, h2 {
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#buttonbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+textarea {
+    font-family: "Jetbrains Mono";
+    font-size: 18px;
+    /* margin-top: 1em; */
+    padding: 0.5em;
+    width: 100%;
+    resize: none;
+}
+
+input {
+    font-family: inherit;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: .375em;
+    color: #363636;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.2rem;
+    line-height: 2em;
+    height: 2em;
+    padding: calc(.5em - 1px) 1em;
+    margin-top: 1em;
+}
+
+button>svg {
+    width: 100%;
+    height: 100%;
+    padding-left: 0.5em;
+}
+
+button:active {
+    border-color: #4a4a4a;
+    outline: 0;
+}
+
+button:focus {
+    border-color: #485fc7;
+    outline: 0;
+}
+
+button:hover {
+    border-color: #b5b5b5;
+}
+
+button:focus:not(:active) {
+    box-shadow: rgba(72, 95, 199, .25) 0 0 0 .125em;
+}
+
+input[type=number] {
+    appearance: textfield;
+    /* -moz-appearance: textfield; */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* select {
+    display: inline-block;
+} */
