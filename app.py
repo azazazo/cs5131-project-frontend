@@ -5,6 +5,8 @@ import tensorflow as tf
 from gensim.models import Word2Vec
 import numpy as np
 
+import os
+
 model = tf.keras.models.load_model("model_4.keras")
 embedding = Word2Vec.load("embedding.model")
 
@@ -35,12 +37,16 @@ def index():
 
 @app.route('/detect', methods=["POST"])
 def detect():
-    global prediction
-    global result
-    global message
+    code = request.form["code"]
 
-    json = request.get_json() 
-    code = json['code']
+    with open("temp.c", "w") as f:
+        f.write(code)
+    
+    if os.system("gcc -fsyntax-only temp.c") != 0:
+        os.system("rm temp.c")
+        return render_template('/error.html')
+    
+    os.system("rm temp.c")
 
     try:
         lexed = lex(code)
@@ -71,18 +77,6 @@ def detect():
     print(_prediction)
     prediction = "\n".join([f"{k}: {v:.2f}%" for k, v in _prediction.items()])
 
-    return {}
-
-
-@app.route('/results', methods=['GET'])
-def results():
-    global prediction
-    global result
-    global message
-
-    print(prediction)
-    print(result)
-    print(message)
     return render_template("/results.html", prediction=prediction, result=result, message=message)
 
 
