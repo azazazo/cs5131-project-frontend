@@ -39,14 +39,14 @@ def index():
 def detect():
     code = request.form["code"]
 
-    with open("temp.c", "w") as f:
-        f.write(code)
+    # with open("temp.c", "w") as f:
+    #     f.write(code)
     
-    if os.system("gcc -fsyntax-only temp.c") != 0:
-        os.system("rm temp.c")
-        return render_template('/error.html')
+    # if os.system("gcc -fsyntax-only temp.c") != 0:
+    #     os.system("rm temp.c")
+    #     return render_template('/error.html')
     
-    os.system("rm temp.c")
+    # os.system("rm temp.c")
 
     try:
         lexed = lex(code)
@@ -74,10 +74,55 @@ def detect():
 
     _prediction = {k: v*100 for k, v in zip(["Safe", "CWE-119", "CWE-120", "CWE-469"], _prediction)}
     _prediction = dict(sorted(_prediction.items(), key=lambda item: -item[1]))
-    print(_prediction)
-    prediction = "\n".join([f"{k}: {v:.2f}%" for k, v in _prediction.items()])
 
-    return render_template("/results.html", prediction=prediction, result=result, message=message)
+    js = """
+<script>
+new Chart(
+    document.getElementById('prediction'),
+    {{
+        type: 'bar',
+        options: {{
+            indexAxis: 'y',
+            plugins: {{
+                legend: {{
+                    display: false
+                }},
+                title: {{
+                    display: true,
+                    text: 'Prediction'
+                }},
+                tooltip: {{
+                    callbacks: {{
+                        label: function(context) {{
+                            return context.dataset.label + ': ' + context.parsed.x.toFixed(2) + '%';
+                        }}
+                    }}
+                
+                }}
+            }}
+        }},
+        data: {{
+            labels: {k},
+            datasets: [
+                {{
+                    label: 'Predicted percentage',
+                    data: {v}
+                }}
+            ]
+        }}
+    }}
+);
+</script>
+""".format(k=list(_prediction.keys()), v=list(_prediction.values()))
+    
+
+    prediction = "\n".join([f"<dd class=\"bar {k}\"><span> {k}: {v:.2f}% </span></dd>" for k, v in _prediction.items()])
+
+    return render_template(
+        "/results.html",
+        prediction=prediction, result=result, message=message,
+        js=js
+    )
 
 
 if __name__ == "__main__":

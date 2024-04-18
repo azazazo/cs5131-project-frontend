@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../static/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <style>
             svg {
                 height: 75%;
@@ -21,6 +23,7 @@
     <body>
         <h1> Your code is {{ result }} </h1>
         <h2> {{ message }} </h2>
-        {{ prediction }}
+        <canvas id="prediction"></canvas>
+        {{ js|safe }}
     </body>
 </html>

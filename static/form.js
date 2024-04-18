@@ -4,13 +4,11 @@ function submit() {
     console.log("submitting");
     var json = {};
 
-    if ($("#code[0]").value.length != 0) json["code"] = $("#code[0]").value;
+    if ($("#code")[0].value.length != 0) json["code"] = $("#code")[0].value;
     else {
         alert("Cannot have empty field");
         return;
     }
-
-    console.log(json)
 
     fetch(url, {
         method: 'POST',
@@ -48,7 +46,7 @@ $(document).ready(function() {
 
     $("#fileinput").change(function() {
         var file = $(this).prop("files")[0];
-        
+
         var reader = new FileReader();
         reader.addEventListener('load', function() {
             var contents = reader.result;
